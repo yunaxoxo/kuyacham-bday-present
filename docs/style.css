@@ -10,6 +10,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 40px; /* Added spacing between UI and Cake */
   height: 100vh;
   margin: 0;
   font-family: sans-serif;
@@ -20,6 +21,7 @@ body {
 #ui {
   text-align: center;
   z-index: 10;
+  min-height: 80px; /* Ensures space for the message change */
 }
 
 button {
@@ -30,6 +32,7 @@ button {
   border: none;
   border-radius: 50px;
   cursor: pointer;
+  box-shadow: 0 4px #1e8449;
 }
 
 /* --- CAKE & CANDLE --- */
@@ -40,7 +43,7 @@ button {
   background: var(--cake-color);
   border-radius: 10px 10px 0 0;
   box-shadow: 0 10px 0 var(--frosting-color);
-  margin-top: 60px;
+  margin-top: 80px; /* Increased to prevent candle/button overlap */
 }
 
 .candle {
@@ -58,20 +61,19 @@ button {
   width: 15px;
   height: 25px;
   background: var(--flame-color);
-  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  border-radius: 50%;
   top: -25px;
   left: -2.5px;
   animation: flicker 0.1s infinite alternate;
   transition: opacity 0.3s ease;
 }
 
-/* The Fix: Kill the animation and hide the flame */
 .blown-out {
   opacity: 0 !important;
   animation: none !important;
 }
 
-/* Smoke effect triggered by JS */
+/* Smoke effect */
 .is-blown::after {
   content: "☁️";
   position: absolute;
@@ -101,6 +103,7 @@ button {
   }
 }
 
+/* Video Preview */
 #video-container {
   position: fixed;
   bottom: 15px;
@@ -110,6 +113,7 @@ button {
   border: 2px solid white;
   border-radius: 8px;
   overflow: hidden;
+  background: #000;
 }
 
 video {
