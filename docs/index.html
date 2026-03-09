@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Birthday Surprise</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="ui">
+      <h1 id="msg">🎂 Ready for the surprise?</h1>
+      <button id="start-btn">Start Birthday Mode</button>
+    </div>
+
+    <div class="cake" id="cake-body">
+      <div class="candle">
+        <div class="flame" id="main-flame"></div>
+      </div>
+    </div>
+
+    <div id="video-container">
+      <video id="webcam" autoplay playsinline></video>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
