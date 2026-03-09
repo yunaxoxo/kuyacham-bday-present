@@ -49,7 +49,7 @@ function checkVolume() {
 function blowOut() {
   flame.classList.add("blown-out");
   cake.classList.add("is-blown");
-  msg.innerText = "HAPPY BIRTHDAY BRO! 🎈";
+  msg.innerText = "HAPPY BIRTHDAY!🎈🎈🎈";
 
   confetti({
     particleCount: 150,
