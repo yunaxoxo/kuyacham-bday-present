@@ -10,7 +10,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 40px; /* Added spacing between UI and Cake */
+  gap: 40px;
   height: 100vh;
   margin: 0;
   font-family: sans-serif;
@@ -21,7 +21,7 @@ body {
 #ui {
   text-align: center;
   z-index: 10;
-  min-height: 80px; /* Ensures space for the message change */
+  min-height: 80px;
 }
 
 button {
@@ -43,7 +43,7 @@ button {
   background: var(--cake-color);
   border-radius: 10px 10px 0 0;
   box-shadow: 0 10px 0 var(--frosting-color);
-  margin-top: 80px; /* Increased to prevent candle/button overlap */
+  margin-top: 80px;
 }
 
 .candle {
