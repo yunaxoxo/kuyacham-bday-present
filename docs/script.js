@@ -8,11 +8,13 @@ const partySound = document.getElementById("party-sound");
 let audioContext, analyser, dataArray, micStream;
 
 startBtn.addEventListener("click", async () => {
+  partySound.volume = 0; // mute
   partySound
     .play()
     .then(() => {
       partySound.pause();
       partySound.currentTime = 0;
+      partySound.volume = 0.7;
     })
     .catch((e) => console.log("Audio priming failed:", e));
 
@@ -60,7 +62,6 @@ function checkVolume() {
 }
 
 function blowOut() {
-  partySound.volume = 0.7;
   partySound.play();
 
   // Shut down mic hardware
