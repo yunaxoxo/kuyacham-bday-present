@@ -49,7 +49,7 @@ function checkVolume() {
   meterFill.style.width = meterWidth + "%";
 
   // Threshold: If blow is strong enough, trigger blowout
-  if (average > 35) {
+  if (average > 40) {
     blowOut();
   } else {
     requestAnimationFrame(checkVolume);
@@ -57,13 +57,15 @@ function checkVolume() {
 }
 
 function blowOut() {
-  // Shut down the mic immediately
+  // Shut down the mic hardware to stop the hiss
   if (micStream) {
     micStream.getTracks().forEach((track) => track.stop());
   }
-  if (audioContext) {
-    audioContext.close();
-  }
+
+  // Play the Party Sound
+  const sound = document.getElementById("party-sound");
+  sound.volume = 0.5;
+  sound.play();
 
   // UI Updates
   meterFill.style.width = "0%";
@@ -73,6 +75,11 @@ function blowOut() {
 
   // Confetti
   if (typeof confetti === "function") {
-    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+    confetti({
+      particleCount: 150,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ["#ff0000", "#00ff00", "#0000ff", "#ffff00"],
+    });
   }
 }
