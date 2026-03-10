@@ -44,6 +44,7 @@ button {
   transition:
     transform 0.1s,
     box-shadow 0.1s;
+  margin-bottom: 20px;
 }
 
 button:active {
@@ -90,7 +91,6 @@ button:active {
   left: 50%;
   transform: translateX(-50%);
   border-radius: 3px 3px 0 0;
-  margin-top: 20px;
 }
 
 .flame {
