@@ -49,7 +49,7 @@ function checkVolume() {
   meterFill.style.width = meterWidth + "%";
 
   // Threshold: If blow is strong enough, trigger blowout
-  if (average > 40) {
+  if (average > 35) {
     blowOut();
   } else {
     requestAnimationFrame(checkVolume);
