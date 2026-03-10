@@ -103,21 +103,27 @@ button {
   }
 }
 
-/* Video Preview */
-#video-container {
-  position: fixed;
-  bottom: 15px;
-  right: 15px;
-  width: 100px;
-  height: 80px;
-  border: 2px solid white;
-  border-radius: 8px;
+#meter-container {
+  width: 200px;
+  height: 20px;
+  background: #333;
+  border-radius: 10px;
+  margin: 20px auto;
   overflow: hidden;
-  background: #000;
+  position: relative;
+  border: 2px solid #555;
 }
 
-video {
-  width: 100%;
+#meter-fill {
+  width: 0%;
   height: 100%;
-  object-fit: cover;
+  background: linear-gradient(90deg, #4caf50, #8bc34a);
+  transition: width 0.1s ease-out;
+}
+
+#msg {
+  text-align: center;
+  font-family: sans-serif;
+  font-weight: bold;
+  margin-top: 10px;
 }

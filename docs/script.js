@@ -1,55 +1,55 @@
 const startBtn = document.getElementById("start-btn");
 const flame = document.getElementById("main-flame");
 const cake = document.getElementById("cake-body");
-const video = document.getElementById("webcam");
 const msg = document.getElementById("msg");
+const meterFill = document.getElementById("meter-fill");
 
 let audioContext, analyser, dataArray, micStream;
 
 startBtn.addEventListener("click", async () => {
   try {
-    // Request mic/video.
-    // keep echoCancellation/noiseSuppression off to hear the "blow" hiss better.
     micStream = await navigator.mediaDevices.getUserMedia({
-      video: true,
-      audio: { echoCancellation: false, noiseSuppression: false },
+      audio: {
+        echoCancellation: false,
+        noiseSuppression: false,
+        autoGainControl: false,
+      },
     });
 
-    // video element is muted to prevent feedback "static"
-    video.srcObject = micStream;
-    video.muted = true;
-
     startBtn.style.display = "none";
-    msg.innerText = "💨 BLOW into the mic!";
+    msg.innerText = "💨 Make a wish and BLOW!";
 
-    // Web Audio API
+    // Setup Audio API
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
     analyser = audioContext.createAnalyser();
     const source = audioContext.createMediaStreamSource(micStream);
 
     source.connect(analyser);
-
     analyser.fftSize = 256;
     dataArray = new Uint8Array(analyser.frequencyBinCount);
 
     checkVolume();
   } catch (err) {
-    console.error(err);
-    alert("Microphone permission is required for the birthday surprise!");
+    alert("Please allow microphone access to blow the candle!");
   }
 });
 
 function checkVolume() {
-  // Stop the loop if the candle is already out
   if (flame.classList.contains("blown-out")) return;
 
   analyser.getByteFrequencyData(dataArray);
 
-  // Calculate average volume
-  let average = dataArray.reduce((a, b) => a + b) / dataArray.length;
+  // Focus on high frequencies (blowing sounds) for better accuracy
+  // We ignore the low bass frequencies (indices 0-40)
+  const highFreqs = dataArray.slice(40);
+  const average = highFreqs.reduce((a, b) => a + b, 0) / highFreqs.length;
 
-  // Threshold check
-  if (average > 40) {
+  // Update the visual meter (0 to 100%)
+  const meterWidth = Math.min((average / 100) * 100, 100);
+  meterFill.style.width = meterWidth + "%";
+
+  // Threshold: If blow is strong enough, trigger blowout
+  if (average > 35) {
     blowOut();
   } else {
     requestAnimationFrame(checkVolume);
@@ -57,27 +57,22 @@ function checkVolume() {
 }
 
 function blowOut() {
-  //  Stops the static hiss
+  // Shut down the mic immediately
   if (micStream) {
     micStream.getTracks().forEach((track) => track.stop());
   }
-
-  // Close the Audio Processing
   if (audioContext) {
     audioContext.close();
   }
 
-  // Visual effects
+  // UI Updates
+  meterFill.style.width = "0%";
   flame.classList.add("blown-out");
   cake.classList.add("is-blown");
-  msg.innerText = "HAPPY BIRTHDAY!!🎈🎈🎈";
+  msg.innerText = "✨ HAPPY BIRTHDAY!! 🎈";
 
-  // Confetti trigger
+  // Confetti
   if (typeof confetti === "function") {
-    confetti({
-      particleCount: 150,
-      spread: 70,
-      origin: { y: 0.6 },
-    });
+    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
   }
 }
